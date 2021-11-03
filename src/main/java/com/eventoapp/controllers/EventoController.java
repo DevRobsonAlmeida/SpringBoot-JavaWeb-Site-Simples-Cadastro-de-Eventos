@@ -6,7 +6,10 @@ package com.eventoapp.controllers;
 
 import com.eventoapp.models.Evento;
 import com.eventoapp.repository.EventoRepository;
-import javafx.scene.input.KeyCode;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -38,7 +41,11 @@ public class EventoController {
     public ModelAndView listaEventos() {
         ModelAndView mv = new ModelAndView("index");
         Iterable<Evento> eventos = er.findAll();
-        mv.addObject("eventos", eventos);
+        List<Evento> listEventos = new ArrayList<>();
+        listEventos = (List) er.findAll();
+        
+        mv.addObject("eventos", listEventos.stream().sorted(Comparator.comparing(Evento::getNome)).collect(Collectors.toList()));
+        
         return mv;
     }
 
