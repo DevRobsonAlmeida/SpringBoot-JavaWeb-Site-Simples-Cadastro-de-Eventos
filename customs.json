@@ -6,6 +6,9 @@
         },
         "th:each": {
             "context": "div"
+        },
+        "th:href": {
+            "context": "a"
         }
     }
 }
