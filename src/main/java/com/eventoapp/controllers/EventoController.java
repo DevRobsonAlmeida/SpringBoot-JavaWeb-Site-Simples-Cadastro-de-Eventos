@@ -4,12 +4,11 @@
  */
 package com.eventoapp.controllers;
 
+import com.eventoapp.models.Convidado;
 import com.eventoapp.models.Evento;
+import com.eventoapp.repository.ConvidadoRepository;
 import com.eventoapp.repository.EventoRepository;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.stream.Collectors;
+import org.hibernate.exception.SQLGrammarException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,6 +26,9 @@ public class EventoController {
     @Autowired
     private EventoRepository er;
 
+    @Autowired
+    private ConvidadoRepository cr;
+
     @RequestMapping(value = "/cadastrarEvento", method = RequestMethod.GET)
     public String form() {
         return "evento/formEvento";
@@ -42,19 +44,34 @@ public class EventoController {
     public ModelAndView listaEventos() {
         ModelAndView mv = new ModelAndView("index");
         Iterable<Evento> eventos = er.findAll();
-        
+
         mv.addObject("eventos", eventos);
-        
+
         return mv;
     }
-    
-    @RequestMapping("/{codigo}")
-    public ModelAndView detalhesEvento(@PathVariable("codigo") long codigo){
+
+    @RequestMapping(value = "/{codigo}", method = RequestMethod.GET)
+    public ModelAndView detalhesEvento(@PathVariable("codigo") long codigo) {
         Evento evento = er.findByCodigo(codigo);
         ModelAndView mv = new ModelAndView("evento/detalhesEvento");
         mv.addObject("evento", evento);
-        System.out.println("evento" + evento);
+        
+        Iterable<Convidado> convidados =  cr.findByEvento(evento);
+        mv.addObject("convidados", convidados);
         return mv;
+    }
+
+    @RequestMapping(value = "/{codigo}", method = RequestMethod.POST)
+    public String convidado(Convidado convidado, @PathVariable("codigo") long codigo) {
+        try{
+            Evento evento = er.findByCodigo(codigo);
+            convidado.setEvento(evento);
+            cr.save(convidado);
+        } catch (SQLGrammarException e) {
+            e.getMessage();
+            e.getStackTrace();
+        }
+        return "redirect:/{codigo}";
     }
 
 }

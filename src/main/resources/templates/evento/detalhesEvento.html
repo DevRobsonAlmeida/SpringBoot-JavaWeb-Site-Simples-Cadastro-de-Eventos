@@ -13,37 +13,46 @@
     <body>
         <h1 style="text-align: center">Evento</h1>
         <h2 style="display: flex; justify-content: center"><a href="/eventos" class="waves-effect waves-light btn"><i class="material-icons left">add_circle_outline</i>Lista de Evento</a></h2>
-        <div th:each="evento : ${evento}" class="container"> 
-            <div class="row"> 
-                <p>Nome:    <span th:text="${evento.nome}" ></span></p>
-                <p>Local:   <span th:text="${evento.local}" ></span></p>
-                <p>Data:    <span th:text="${evento.data}" ></span></p>
-                <p>Horario: <span th:text="${evento.horario}" ></span></p>
+        <div th:each="evento : ${evento}" class="container" > 
+            <div class="row" style="margin: 0 auto; font-size: 1.3em; background-color: #00C853; color: #ffffff"> 
+                <div class="input-field col s3" >Nome:    </div>
+                <div class="input-field col s3" >Local:   </div>
+                <div class="input-field col s3" >Data:    </div>  
+                <div class="input-field col s3" >Horario: </div> 
             </div>
-            
+            <div class="row">
+                <div class="input-field col s3" ><span th:text="${evento.nome}" >   </span></div>
+                <div class="input-field col s3" ><span th:text="${evento.local}">   </span></div>
+                <div class="input-field col s3" ><span th:text="${evento.data}" >   </span></div>
+                <div class="input-field col s3" ><span th:text="${evento.horario}"> </span></div>
+            </div>
+
+            <form method="post">
+                Nome: <input type="text" name="nomeConvidado" value="">
+                RG:   <input type="text" name="rg" value="">
+                <button class="waves-effect waves-light btn" type="submit"> Adicionar </button>
+            </form>
+
+            <h3>Lista de Convidados</h3>
+            <div style="max-width: 390px">
+                <div style=" margin: 0 auto; border: 0px solid #ccc;font-size:1.2em;"  >
+                    <div class="row" style="background-color: #00C853; color: #ffffff; display: flex;">
+                        <div class="input-field col s4" > Nome </div>
+                        <div class="input-field col s4" > RG </div>
+                    </div>
+                </div>
+                <div th:each="convidado : ${convidados}"  style="margin: 0 auto; border: 0px solid #ccc;">
+                    <div class="row" style="display: flex;">
+                        <div class="input-field col s4">
+                            <span th:text="${convidado.nomeConvidado}"></span>
+                        </div >
+                        <div class="input-field col s4">
+                            <span th:text="${convidado.rg}"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-        
-        
-        
-        
-<!--        <table class="container">
-            <thead>
-                <tr>
-                    <td>Nome</td>
-                    <td>Local</td>
-                    <td>Data</td>
-                    <td>Horario</td>
-                </tr>
-            </thead>
-            <tbody>
-                <tr th:each="evento : ${eventos}">
-                    <td><a th:href="${(#mvc.url('EC#detalhesEvento').arg(0, evento.codigo).build())}"><span th:text="${evento.nome}"></span></a></td>
-                    <td><span th:text="${evento.local}"></span></td>
-                    <td><span th:text="${evento.data}"></span></td>
-                    <td><span th:text="${evento.horario}"></span></td>
-                </tr>
-            </tbody>
-        </table>-->
         <script type="text/javascript" src="materialize/js/materialize.min.js"></script>
     </body>
 </html>
