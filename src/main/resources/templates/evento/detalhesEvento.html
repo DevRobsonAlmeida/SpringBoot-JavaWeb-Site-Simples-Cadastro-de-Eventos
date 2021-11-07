@@ -27,9 +27,12 @@
                 <div class="input-field col s3" ><span th:text="${evento.horario}"> </span></div>
             </div>
 
+            
+            <th:block th:include="mensagemValidacao"></th:block>
+            
             <form method="post">
-                Nome: <input type="text" name="nomeConvidado" value="">
-                RG:   <input type="text" name="rg" value="">
+                Nome: <input type="text" name="nomeConvidado" >
+                RG:   <input type="text" name="rg" >
                 <button class="waves-effect waves-light btn" type="submit"> Adicionar </button>
             </form>
 
@@ -47,7 +50,8 @@
                             <span th:text="${convidado.nomeConvidado}"></span>
                         </div >
                         <div class="input-field col s4">
-                            <span th:text="${convidado.rg}"></span>
+                            <span th:text="${convidado.rg}" >
+                            </span>
                         </div>
                     </div>
                 </div>

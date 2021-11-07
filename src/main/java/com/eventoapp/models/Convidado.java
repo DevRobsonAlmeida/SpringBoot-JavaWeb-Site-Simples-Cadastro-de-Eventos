@@ -8,6 +8,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import net.bytebuddy.implementation.bind.annotation.Empty;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -39,6 +40,17 @@ public class Convidado implements Serializable{
     public Convidado(String rg, String nomeConvidado) {
         this.rg = rg;
         this.nomeConvidado = nomeConvidado;
+    }
+    
+    public boolean campoVazio(){
+        boolean vazio = false;
+        if (rg == "" || rg.isEmpty()) {
+            vazio = true;
+        }
+        if (nomeConvidado == "" || nomeConvidado.isEmpty()) {
+            vazio = true;
+        }
+        return vazio;
     }
 
     public String getRg() {

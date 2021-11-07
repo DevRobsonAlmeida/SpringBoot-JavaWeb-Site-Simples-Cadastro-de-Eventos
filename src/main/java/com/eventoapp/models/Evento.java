@@ -24,7 +24,6 @@ public class Evento implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long codigo;
-    
     private String nome;
     private String local;
     private String data;
@@ -38,6 +37,24 @@ public class Evento implements Serializable{
 
     public Evento(long codigo) {
         this.codigo = codigo;
+    }
+    
+    
+    public boolean campoVazio(){
+        boolean vazio = false;
+        if (nome == "" || nome.isEmpty()) {
+            vazio = true;
+        }
+        if (local == "" || local.isEmpty()) {
+            vazio = true;
+        }
+        if (data == "" || data.isEmpty()) {
+            vazio = true;
+        }
+        if (horario == "" || horario.isEmpty()) {
+            vazio = true;
+        }
+        return vazio;
     }
 
     public Evento(long codigo, String nome, String local, String data, String horario) {
